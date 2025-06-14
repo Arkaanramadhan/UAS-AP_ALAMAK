@@ -1,0 +1,270 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <windows.h>
+#include <conio.h>
+using namespace std;
+
+string namaPemain[5];
+int skorPemain[5];
+int Dadu[5];
+int temp;
+string temp1;
+int nilaiTB[5];
+int skorTieBreak[5] = {0}; // Tambahan untuk mencatat skor tie break sesuai posisi pemain
+char opsi;
+bool tie;
+
+void gotoxy(int x, int y) {
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+void hello() {
+    cout << "===========================================\n";
+    cout << "Selamat Datang di Game Dadu Kelompok Alamak!!!\n";
+    cout << "===========================================\n";
+}
+
+void allert() {
+    cout << "NOTE : Pemain maksimal berjumlah 5 orang\n\n";
+}
+
+void inputData(int x) {
+    cout << "\n";
+    for (int i = 0; i < x; i++) {
+        cout << "Nama pemain ke - " << i + 1 << " : ";
+        cin >> namaPemain[i];
+        skorPemain[i] = 0;
+    }
+}
+
+void game(int x) {
+    for (int i = 0; i < 3; i++) {
+        system("cls");
+        cout << "\nPutaran ke - " << i + 1;
+        for (int j = 0; j < x; j++) {
+            cout << "\n\nPemain ke - " << j + 1 << " atau " << namaPemain[j];
+            Dadu[j] = (rand() % 6) + 1;
+            skorPemain[j] += Dadu[j];
+            cout << "\nDadu anda bernilai : " << Dadu[j];
+            cout << "\nSkor anda saat ini : " << skorPemain[j];
+        }
+        cout << "\n";
+        system("pause");
+    }
+}
+
+void tampilkanSkor(int x, int y) {
+    system("cls");
+    cout << "Skor Target : " << y << endl;
+    cout << "========================================================\n";
+    cout << "Ranking | Nama                   | Skor  | Selisih Skor  \n";
+    cout << "========================================================\n";
+    for (int i = 0; i < x; i++) {
+        gotoxy(0, 4 + i); cout << i + 1;
+        gotoxy(7, 4 + i); cout << " | ";
+        gotoxy(10, 4 + i); cout << namaPemain[i];
+        gotoxy(32, 4 + i); cout << " | ";
+        gotoxy(35, 4 + i); cout << skorPemain[i];
+        gotoxy(40, 4 + i); cout << " | ";
+        gotoxy(43, 4 + i); cout << y - skorPemain[i];
+    }
+    cout << "\nTekan Enter untuk lanjut ...\n";
+    getch();
+}
+
+void urut(int x) {
+    for(int i = 0; i < x; i++) {
+        for(int j = i; j < x; j++) {
+            if(skorPemain[i] < skorPemain[j]){
+                temp = skorPemain[i];
+                skorPemain[i] = skorPemain[j];
+                skorPemain[j] = temp;
+                temp1 = namaPemain[i];
+                namaPemain[i] = namaPemain[j];
+                namaPemain[j] = temp1;
+            }
+        }
+    }
+}
+
+void tieBreak(int indeks[], int count) {
+    system("CLS");
+    cout << "===================================\n";
+    cout << "Selamat datang di game tie breaker \n";
+    cout << "===================================\n";
+    cout << "Peserta tie breaker : \n";
+    for (int i = 0; i < count; i++) {
+        cout << i+1 << ". " <<namaPemain[indeks[i]] << "\n";
+    }
+    cout << "Klik tombol enter untuk memulai...\n";
+    getch();
+
+    // Lakukan lemparan awal untuk semua peserta tie break
+    for (int i = 0; i < count; i++) {
+        skorTieBreak[indeks[i]] = (rand() % 6) + 1;
+    }
+
+    while (true) { // Loop akan terus berjalan sampai semua tie teratasi
+        system("CLS");
+        cout << "--- Hasil Babak Tie Break ---\n";
+        for (int i = 0; i < count; i++) {
+            cout << "\nPemain ke- " << i+1 << " atau "<<namaPemain[indeks[i]] << endl;
+            cout << "Dadu anda bernilai : " << skorTieBreak[indeks[i]] << endl;
+            cout << "\n";
+        }
+
+        // Cek apakah masih ada skor yang sama
+        bool tieDitemukan = false;
+        int skorImbang = -1;
+
+        // Loop untuk mencari pasangan skor yang sama
+        for (int i = 0; i < count - 1; i++) {
+            for (int j = i + 1; j < count; j++) {
+                if (skorTieBreak[indeks[i]] == skorTieBreak[indeks[j]]) {
+                    tieDitemukan = true;
+                    skorImbang = skorTieBreak[indeks[i]];
+                    break; // Keluar dari loop dalam
+                }
+            }
+            if (tieDitemukan) {
+                break; // Keluar dari loop luar
+            }
+        }
+
+        // Jika ditemukan skor yang imbang
+        if (tieDitemukan) {
+            cout << "!!! Tie Terdeteksi dengan skor " << skorImbang << " !!!\n";
+            cout << "Pemain yang imbang akan melempar ulang dadu.\n\n";
+
+            // Lakukan lemparan ulang HANYA untuk pemain yang skornya masih imbang
+            for (int i = 0; i < count; i++) {
+                if (skorTieBreak[indeks[i]] == skorImbang) {
+                    int lemparanBaru = (rand() % 6) + 1;
+                    cout << namaPemain[indeks[i]] << " melempar ulang dan mendapat: " << lemparanBaru << endl;
+                    skorTieBreak[indeks[i]] = lemparanBaru;
+                }
+            }
+            system("pause");
+            // Loop while(true) akan mengulang proses pengecekan dari awal
+        } else {
+            // Jika tidak ada lagi skor yang sama, keluar dari loop
+            cout << "Tie break selesai! Tidak ada skor yang sama.\n";
+            system("pause");
+            break;
+        }
+    }
+}
+
+void cekDanLakukanTieBreak(int x) {
+    int i = 0;
+    tie = false;
+    while (i < x - 1) {
+        if (skorPemain[i] == skorPemain[i + 1]) {
+            tie = true;
+            int indeks[5], count = 0;
+            int skorSama = skorPemain[i];
+            while (i + count < x && skorPemain[i + count] == skorSama) {
+                indeks[count] = i + count;
+                count++;
+            }
+            tieBreak(indeks, count);
+            i += count;
+        } else {
+            i++;
+        }
+    }
+}
+
+
+void urut1(int x) {
+    for (int i = 0; i < x - 1; i++) {
+        for (int j = i + 1; j < x; j++) {
+            // Urutkan berdasarkan skor total
+            if (skorPemain[i] < skorPemain[j] ||
+               (skorPemain[i] == skorPemain[j] && skorTieBreak[i] < skorTieBreak[j])) {
+                // Tukar skor total
+                swap(skorPemain[i], skorPemain[j]);
+                // Tukar skor tie break
+                swap(skorTieBreak[i], skorTieBreak[j]);
+                // Tukar nama pemain
+                swap(namaPemain[i], namaPemain[j]);
+            }
+        }
+    }
+}
+
+
+void tampilkanSkor1(int x, int y) {
+    system("cls");
+    cout << "Skor Target : " << y << endl;
+    cout << "=========================================================================\n";
+    cout << "Ranking | Nama                   | Skor  | Selisih Skor | Skor Tie Break \n";
+    cout << "=========================================================================\n";
+    for (int i = 0; i < x; i++) {
+        gotoxy(0, 4 + i); cout << i + 1;
+        gotoxy(7, 4 + i); cout << " | ";
+        gotoxy(10, 4 + i); cout << namaPemain[i];
+        gotoxy(32, 4 + i); cout << " | ";
+        gotoxy(35, 4 + i); cout << skorPemain[i];
+        gotoxy(40, 4 + i); cout << " | ";
+        gotoxy(43, 4 + i); cout << y - skorPemain[i];
+        gotoxy(55, 4 + i); cout << " | ";
+        gotoxy(58, 4 + i); cout << skorTieBreak[i]; // Gunakan tie break per pemain
+    }
+    cout << "\nTekan Enter untuk lanjut ...\n";
+    getch();
+}
+
+int main() {
+    alamak : 
+    srand(time(0));
+    system("cls");
+
+    int jlh_pemain, target_skor;
+
+    
+    hello();
+    allert();
+
+    do {
+        cout << "Masukkan Jumlah Pemain     : ";
+        cin >> jlh_pemain;
+        if (jlh_pemain > 5 || jlh_pemain <= 0)
+            cout << "Jumlah pemain harus antara 1 - 5!\n";
+    } while (jlh_pemain > 5 || jlh_pemain <= 0);
+
+    do {
+        cout << "Masukkan skor target       : ";
+        cin >> target_skor;
+        if (target_skor < 0)
+            cout << "Skor tidak boleh negatif!\n";
+    } while (target_skor < 0);
+
+    inputData(jlh_pemain);
+    game(jlh_pemain);
+    urut(jlh_pemain);
+    tampilkanSkor(jlh_pemain, target_skor);
+    cekDanLakukanTieBreak(jlh_pemain);
+    urut1(jlh_pemain);
+
+    if (tie == true)
+    {
+     tampilkanSkor1(jlh_pemain, target_skor);
+    }
+    cout << "Apakah ingin lanjut bermain (Y/T) :  ";
+    cin >> opsi;
+    if (opsi == 'Y'  || opsi == 'y')
+    {
+        goto alamak;
+    }
+    else 
+    {
+        cout << "TERIMA KASIH SUDAH BERMAIN GAME KAMI !!!";
+    }
+
+    return 0;
+}
