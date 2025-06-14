@@ -1,3 +1,4 @@
+
                   KELOMPOK ALAMAK
 =======================================================
 
@@ -31,18 +32,8 @@ Anggota Kelompok :
   4. Dapat menunjukkan total skor yang didapatkan tiap pemain
   5. Dapat menunjukkan selisih skor yang didapatkan pemain
      dengan skor target
- 
-* FUNGSI PROGRAM :
-  Program digunakan untuk menampilkan ranking pemain berdasarkan jumlah
-  skor dadu yang ia dapatkan selama 3 kali pelemparan.Pemain yang mendapatkan
-  skor dadu yang paling mendekati skor target yang telah ditentukan di awal ,
-  maka dia akan mendapat posisi pertama. Apabila ada kondisi skor dadu pemain
-  hasilnya sama, maka akan terjadi pelemparan dadu lagi bagi pemain yang
-  mendapatkan skor yang sama. Pelemparan tersebut akan masuk dalam game tie break,
-  yang dimana pemain yng mendapatkan nilai dadu yang paling besar maka ia akan mendapatkan
-  posisi/ranking yang lebih tinggi dari pemain yang memiliki skor yang sama dengannya.
 
-===========================================================================================
+============================================================
   
 
 
