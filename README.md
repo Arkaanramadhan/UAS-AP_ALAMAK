@@ -28,6 +28,7 @@ Anggota Kelompok :
   - Dapat menunjukkan total skor yang didapatkan tiap pemain
   - Dapat menunjukkan selisih skor yang didapatkan pemain
    dengan skor target
+  - Dapat melakukan game tie break, apabila ada skor pemainyang sama
 
 # OUTPUT
 link G-DRIVE : https://drive.google.com/drive/folders/1c2wAoudYk8qkmugibEU0VrCFPt1bMgUS?usp=drive_link
