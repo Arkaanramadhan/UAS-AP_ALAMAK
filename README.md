@@ -31,7 +31,7 @@ Anggota Kelompok :
 
 # OUTPUT
 link G-DRIVE : https://drive.google.com/drive/folders/1c2wAoudYk8qkmugibEU0VrCFPt1bMgUS?usp=drive_link
-<br>link Youtube : 
+<br>link Youtube : https://youtu.be/LO1BSVmffO4?si=5BQwMhe_FReCfHO4
 
 
   
