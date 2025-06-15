@@ -31,6 +31,10 @@ Anggota Kelompok :
   - Dapat melakukan game tie break, apabila ada skor pemain yang sama
   - Dapat mengulang permainan dari awal jika pemain menginginkannya 
 
+* KETENTUAN :
+  - Skor target maksimal 18
+  - Jumlah pemain maksimal 5
+
 # OUTPUT
 link G-DRIVE : https://drive.google.com/drive/folders/1c2wAoudYk8qkmugibEU0VrCFPt1bMgUS?usp=drive_link
 <br>link Youtube : https://youtu.be/LO1BSVmffO4?si=5BQwMhe_FReCfHO4
